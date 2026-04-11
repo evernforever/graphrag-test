@@ -76,11 +76,14 @@ def search_context(
     question: str,
     top_k: int = 5,
     hops: int = 2,
+    graph_search: bool = True,
 ) -> tuple[list[dict], list[dict], list[dict]]:
-    """벡터 검색 → 엔티티 확장 → 그래프 관계 수집 후 (chunks, entities, relations) 반환."""
+    """벡터 검색 → (선택적) 엔티티 확장 → 그래프 관계 수집 후 (chunks, entities, relations) 반환."""
     q_vec = embed_query(question)
     with GraphStore() as store:
         chunks = store.vector_search(q_vec, top_k=top_k)
+        if not graph_search:
+            return chunks, [], []
         chunk_ids = [c["chunk_id"] for c in chunks]
         entities = store.get_entities_from_chunks(chunk_ids)
         entity_names = [e["name"] for e in entities]

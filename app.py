@@ -82,7 +82,7 @@ def render_graph(entities: list[dict], relations: list[dict]):
 
     config = Config(
         width="100%",
-        height=420,
+        height=280,
         directed=True,
         physics=True,
         hierarchical=False,
@@ -186,9 +186,22 @@ def main():
     with st.sidebar:
         # 설정
         st.subheader("설정")
+        graph_search = st.toggle("그래프 탐색", value=True, help="OFF: 벡터 검색만 사용")
+
         col_tk, col_hp = st.columns(2)
         top_k = col_tk.slider("top-k", 1, 10, 5)
-        hops  = col_hp.slider("홉 수", 1, 3, 2)
+        hops  = col_hp.slider("홉 수", 1, 3, 2, disabled=not graph_search)
+
+        with st.expander("📋 예제 질문"):
+            st.caption("우측 아이콘을 클릭하면 복사됩니다")
+            st.code(
+                "SK텔레콤이 자체 출시한 AI 서비스와 투자한 글로벌 AI 기업을 모두 찾고, "
+                "해당 투자 기업이 또 어떤 거대 클라우드 기업들과 파트너십을 맺고 있는지 "
+                "연결해서 설명해 줘",
+                language=None,
+                wrap_lines=True,
+            )
+
         if st.button("대화 초기화", use_container_width=True):
             st.session_state.messages = []
             st.session_state.last_graph = {"entities": [], "relations": []}
@@ -203,14 +216,49 @@ def main():
                 st.session_state.last_graph["relations"],
             )
 
+        # 관계 온톨로지
+        st.divider()
+        st.subheader("관계 온톨로지")
+        from src.config import RELATION_TYPES
+        RELATION_DESC = {
+            "WORKS_AT":        "소속 / 재직",
+            "LAUNCHED":        "출시 / 런칭",
+            "PARTNERED_WITH":  "파트너십 체결",
+            "INVESTED_IN":     "투자",
+            "RELATED_TO":      "연관",
+            "MERGED_WITH":     "합병",
+            "ACQUIRED_BY":     "인수됨",
+        }
+        for rel in RELATION_TYPES:
+            desc = RELATION_DESC.get(rel, "")
+            st.markdown(f"- **{rel}** — {desc}")
+
         # 샘플 데이터 파일 목록
         st.divider()
         st.subheader("샘플 데이터")
         from src.config import DATA_DIR
+        from src.graph import GraphStore
         txt_files = sorted(DATA_DIR.glob("*.txt"))
         for f in txt_files:
             with st.expander(f.name):
-                st.markdown(f.read_text(encoding="utf-8"))
+                tab_raw, tab_chunks = st.tabs(["원문", "청크"])
+                with tab_raw:
+                    st.markdown(f.read_text(encoding="utf-8"))
+                with tab_chunks:
+                    try:
+                        with GraphStore() as gs:
+                            chunks = gs.get_chunks_by_file(f.name)
+                        if chunks:
+                            for c in chunks:
+                                st.markdown(
+                                    f"**[청크 {c['idx']}]**\n\n{c['text']}",
+                                    help=f"chunk_index: {c['idx']}",
+                                )
+                                st.divider()
+                        else:
+                            st.info("인덱싱 후 청크가 표시됩니다.")
+                    except Exception:
+                        st.warning("Neo4j 연결 불가")
 
     st.subheader("대화")
 
@@ -242,7 +290,7 @@ def main():
             with st.spinner("그래프 탐색 중..."):
                 from src.query import search_context, stream_answer
                 chunks, entities, relations = search_context(
-                    question, top_k=top_k, hops=hops
+                    question, top_k=top_k, hops=hops, graph_search=graph_search
                 )
                 st.session_state.last_graph = {
                     "entities": entities,

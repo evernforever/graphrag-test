@@ -197,6 +197,16 @@ class GraphStore:
             """, names=entity_names)
             return [dict(r) for r in result]
 
+    def get_chunks_by_file(self, filename: str) -> list[dict]:
+        """특정 파일의 청크 목록 (chunk_index 순)."""
+        with self._driver.session() as session:
+            result = session.run("""
+                MATCH (c:Chunk {source_file: $filename})
+                RETURN c.chunk_index AS idx, c.text AS text
+                ORDER BY c.chunk_index
+            """, filename=filename)
+            return [dict(r) for r in result]
+
     # ------------------------------------------------------------------
     # 통계
     # ------------------------------------------------------------------

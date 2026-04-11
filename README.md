@@ -165,6 +165,7 @@ SK텔레콤
 | lg_ai_research.txt | LG AI 연구원 |
 | anthropic_korea.txt | 앤트로픽 한국 시장 |
 | kiosk_fintech.txt | 한국 핀테크 생태계 |
+| dunamu_overview.txt | 두나무 기업 개요 및 네이버파이낸셜 합병 |
 
 자체 문서를 추가하려면 `data/` 폴더에 txt 파일을 넣고 `python main.py index --reset`을 실행하세요.
 

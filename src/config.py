@@ -28,4 +28,4 @@ CHUNK_OVERLAP_CHARS = 50
 
 # Entity / Relation ontology
 ENTITY_TYPES = ["Company", "Person", "Product", "Technology", "Event", "Document"]
-RELATION_TYPES = ["WORKS_AT", "LAUNCHED", "PARTNERED_WITH", "INVESTED_IN", "RELATED_TO"]
+RELATION_TYPES = ["WORKS_AT", "LAUNCHED", "PARTNERED_WITH", "INVESTED_IN", "RELATED_TO", "MERGED_WITH", "ACQUIRED_BY"]

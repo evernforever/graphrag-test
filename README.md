@@ -21,7 +21,7 @@ txt 파일 → 문단 청킹 → KURE-v1 임베딩 → Neo4j Chunk 노드 저장
 ```
 (:SourceFile)-[:HAS_CHUNK]->(:Chunk {embedding})
 (:Chunk)-[:CONTAINS_ENTITY]->(:Entity)
-(:Entity)-[:WORKS_AT | LAUNCHED | PARTNERED_WITH | INVESTED_IN | RELATED_TO {
+(:Entity)-[:WORKS_AT | LAUNCHED | PARTNERED_WITH | INVESTED_IN | RELATED_TO | MERGED_WITH | ACQUIRED_BY {
     evidence_text, source_file, chunk_id, extraction_note
 }]->(:Entity)
 ```

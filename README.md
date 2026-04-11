@@ -103,6 +103,10 @@ python main.py index --reset
 ### 웹 UI 실행
 
 ```bash
+# 가상환경 사용 시
+streamlit run app.py
+
+# 가상환경 없이 시스템 Python 사용 시
 python -m streamlit run app.py
 ```
 

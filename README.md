@@ -32,7 +32,7 @@ txt 파일 → 문단 청킹 → KURE-v1 임베딩 → Neo4j Chunk 노드 저장
                       → Claude Sonnet 4.6 답변 생성
 ```
 
-### 그래프 스키마
+### 그래프 스키마 (온톨로지)
 
 ![그래프 스키마](assets/graph-schema.png)
 

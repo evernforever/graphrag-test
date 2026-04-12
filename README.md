@@ -122,6 +122,26 @@ python -m streamlit run app.py
 
 브라우저에서 http://localhost:8501 접속
 
+### Neo4j Browser (그래프 직접 조회)
+
+Neo4j 전용 브라우저에서 Cypher 쿼리로 그래프를 직접 탐색할 수 있습니다.
+
+http://localhost:7474 접속 후 아래 정보로 로그인:
+
+- **Username**: `neo4j`
+- **Password**: `.env`의 `NEO4J_PASSWORD` 값
+
+```cypher
+-- 전체 그래프 시각화
+MATCH (n)-[r]->(m) RETURN n, r, m LIMIT 100
+
+-- 관계 타입별 개수 확인
+MATCH ()-[r]->()
+WHERE type(r) IN ['WORKS_AT','LAUNCHED','PARTNERED_WITH','INVESTED_IN','RELATED_TO','MERGED_WITH','ACQUIRED_BY']
+RETURN type(r) AS relation_type, count(*) AS count
+ORDER BY count DESC
+```
+
 ### CLI 실행
 
 ```bash

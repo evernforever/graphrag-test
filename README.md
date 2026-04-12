@@ -2,6 +2,22 @@
 
 한국 테크 기업 생태계 문서를 대상으로 **벡터 검색 + 그래프 탐색**을 결합한 GraphRAG 시스템입니다.
 
+## 기술 스택
+
+- **Graph DB / Vector DB**: Neo4j (그래프 + 벡터 인덱스 통합)
+- **Embedding 모델**: nlpai-lab/KURE-v1 (한국어 특화, 1024차원)
+- **LLM**: Claude API (claude-haiku-4-5-20251001 추출 / claude-sonnet-4-6 답변)
+- **Web UI**: Streamlit
+- **그래프 시각화**: streamlit-agraph
+
+## 요구사항
+
+- Python 3.10+
+- Docker (Neo4j 실행용)
+- Anthropic API 키
+
+---
+
 ## 아키텍처
 
 ```
@@ -27,22 +43,6 @@ txt 파일 → 문단 청킹 → KURE-v1 임베딩 → Neo4j Chunk 노드 저장
     evidence_text, source_file, chunk_id, extraction_note
 }]->(:Entity)
 ```
-
----
-
-## 기술 스택
-
-- **Graph DB / Vector DB**: Neo4j (그래프 + 벡터 인덱스 통합)
-- **Embedding 모델**: nlpai-lab/KURE-v1 (한국어 특화, 1024차원)
-- **LLM**: Claude API (claude-haiku-4-5-20251001 추출 / claude-sonnet-4-6 답변)
-- **Web UI**: Streamlit
-- **그래프 시각화**: streamlit-agraph
-
-## 요구사항
-
-- Python 3.10+
-- Docker (Neo4j 실행용)
-- Anthropic API 키
 
 ---
 

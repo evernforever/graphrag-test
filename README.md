@@ -1,4 +1,4 @@
-# GraphRAG PoC
+# GraphRAG Demo
 
 한국 테크 기업 생태계 문서를 대상으로 **벡터 검색 + 그래프 탐색**을 결합한 GraphRAG 시스템입니다.
 

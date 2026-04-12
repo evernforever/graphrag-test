@@ -166,7 +166,7 @@ def init_state():
 
 def main():
     st.set_page_config(
-        page_title="GraphRAG PoC",
+        page_title="GraphRAG Demo",
         page_icon="🔗",
         layout="wide",
     )
@@ -179,7 +179,7 @@ def main():
         </style>
     """, unsafe_allow_html=True)
 
-    st.title("🔗 GraphRAG PoC")
+    st.title("🔗 GraphRAG Demo")
     st.caption("한국 테크 기업 생태계 — 벡터 검색 + 그래프 탐색")
 
     # 사이드바: 설정 + 관계 그래프 + 샘플 파일

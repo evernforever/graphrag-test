@@ -77,15 +77,22 @@ NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your_password  # docker 실행할때 NEO4J_AUTH 부분에 적는 암호를 적으면 됩니다
 ```
 
-### 3. Neo4j 실행 (Docker)
+### 3. Neo4j 실행 (Docker Compose)
 
 ```bash
-docker run \
-  --name neo4j-graphrag \
-  -p 7474:7474 -p 7687:7687 \
-  -e NEO4J_AUTH=neo4j/your_password \
-  -d \
-  neo4j:latest
+docker-compose up -d
+```
+
+중지할 때:
+
+```bash
+docker-compose down
+```
+
+데이터까지 초기화하고 싶을 때:
+
+```bash
+docker-compose down -v
 ```
 
 > Neo4j Browser: http://localhost:7474

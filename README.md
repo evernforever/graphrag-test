@@ -74,7 +74,7 @@ cp .env.example .env
 ANTHROPIC_API_KEY=sk-ant-...
 NEO4J_URI=bolt://localhost:7687
 NEO4J_USERNAME=neo4j
-NEO4J_PASSWORD=your_password  # docker 실행할때 NEO4J_AUTH 부분에 적는 암호를 적으면 됩니다
+NEO4J_PASSWORD=your_password  # 원하는 비밀번호 설정 (docker-compose가 자동으로 Neo4j에 적용)
 ```
 
 ### 3. Neo4j 실행 (Docker Compose)

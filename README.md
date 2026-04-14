@@ -77,7 +77,26 @@ NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your_password  # 원하는 비밀번호 설정 (docker-compose가 자동으로 Neo4j에 적용)
 ```
 
-### 3. Neo4j 실행 (Docker Compose)
+### 3. Docker Desktop 설치
+
+Docker가 없다면 먼저 설치합니다.
+
+**방법 1 — 공식 사이트:**
+[docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop) 에서 다운로드 후 설치
+
+**방법 2 — Homebrew (macOS):**
+
+```bash
+brew install --cask docker
+```
+
+설치 후 Docker Desktop 앱을 한 번 실행해 데몬을 시작합니다. 아래 명령으로 정상 설치 여부를 확인합니다:
+
+```bash
+docker --version
+```
+
+### 4. Neo4j 실행 (Docker Compose)
 
 ```bash
 docker-compose up -d

@@ -299,9 +299,18 @@ def main():
                 st.session_state.highlighted_relation = None
 
             # 스트리밍 답변
-            answer = st.write_stream(
-                stream_answer(question, chunks, entities, relations)
-            )
+            TIMEOUT = 10.0  # 초
+            try:
+                answer = st.write_stream(
+                    stream_answer(question, chunks, entities, relations, timeout=TIMEOUT)
+                )
+            except Exception as e:
+                import anthropic as _anthropic
+                if isinstance(e, _anthropic.APITimeoutError):
+                    st.error("⏱️ API 응답 시간이 초과되었습니다 (10초). 다시 시도해 주세요.")
+                else:
+                    st.error(f"오류가 발생했습니다: {e}")
+                answer = ""
 
             render_source_chunks(chunks)
             render_relation_buttons(relations, len(st.session_state.messages))

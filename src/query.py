@@ -96,6 +96,7 @@ def stream_answer(
     chunks: list[dict],
     entities: list[dict],
     relations: list[dict],
+    timeout: float | None = None,
 ):
     """Claude Sonnet 4.6으로 스트리밍 답변 생성. 텍스트 청크를 yield."""
     context = _build_context(chunks, entities, relations)
@@ -106,6 +107,7 @@ def stream_answer(
         max_tokens=2048,
         system=QUERY_SYSTEM,
         messages=[{"role": "user", "content": user_prompt}],
+        timeout=timeout,
     ) as stream:
         for text in stream.text_stream:
             yield text
